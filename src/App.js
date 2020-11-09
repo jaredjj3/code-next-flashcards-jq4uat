@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import { Card } from "./Card";
 import { Decks } from "./Decks";
-import { Progress } from "./Progress";
 import * as DeckAPI from "./data/DeckAPI";
+
+const shuffle = (arr) => {
+  const result = [...arr];
+  for (let ndx = 0; ndx < arr.length; ndx++) {
+    const i1 = Math.floor(Math.random() * arr.length);
+    const i2 = Math.floor(Math.random() * arr.length);
+    [result[i1], result[i2]] = [result[i2], result[i1]];
+  }
+  return result;
+};
 
 const DEFAULT_DECK = DeckAPI.getAllDecks()[0];
 
@@ -13,8 +22,13 @@ export const App = () => {
   const [hardCards, setHardCards] = useState([]);
   const [resultsVisible, setResultsVisible] = useState(false);
 
+  const numDone = ndx;
+  const numTotal = deck.cards.length;
+  const progress = resultsVisible ? 100 : (numDone / numTotal) * 100;
+
   // TODO: Randomize the cards when a new deck is clicked.
   const onDeckClick = nextDeck => {
+    nextDeck.cards = shuffle(nextDeck.cards);
     setDeck(nextDeck);
     setNdx(0);
     setEasyCards([]);
@@ -45,6 +59,7 @@ export const App = () => {
 
   const onDifficultyButtonClick = (difficulty, card) => {
     markCard(difficulty, card);
+
     const isLastCard = ndx === deck.cards.length - 1;
     if (isLastCard) {
       showResults();
@@ -59,11 +74,24 @@ export const App = () => {
       <Decks onDeckClick={onDeckClick} />
       <hr />
       <h4>Selected deck: {deck.name}</h4>
-      <Progress />
       <Card
+        progress={progress}
         card={deck.cards[ndx]}
         onDifficultyButtonClick={onDifficultyButtonClick}
       />
+
+      <hr />
+
+      {resultsVisible && (
+        <ul className="list-group">
+          {hardCards.map((hardCard) => (
+            <li className="list-group-item">
+              {hardCard.front}
+              <em>{hardCard.back}</em>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

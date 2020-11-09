@@ -1,5 +1,13 @@
-import React from 'react';
+import React from "react";
 
-export const Progress = () => {
-  return <div>Progress</div>;
+export const Progress = (props) => {
+  return (
+    <div class="progress">
+      <div
+        className="progress-bar"
+        role="progressbar"
+        style={{ width: `${props.width}%` }}
+      />
+    </div>
+  );
 };

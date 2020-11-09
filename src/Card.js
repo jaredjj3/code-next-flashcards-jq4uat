@@ -31,7 +31,7 @@ export const Card = props => {
   return (
     <div className="card text-center">
       <div className="card-header">
-        <Progress />
+        <Progress width={props.progress} />
       </div>
 
       <div className="card-body">
