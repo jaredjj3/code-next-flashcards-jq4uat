@@ -1,15 +1,28 @@
 import React, { useState } from "react";
 import { Progress } from "./Progress";
 
+const SIDES = {
+  FRONT: "FRONT",
+  BACK: "BACK"
+};
+
 export const Card = props => {
-  const [side, setSide] = useState("front");
+  const side = props.side;
+  const setSide = props.setSide;
+
+  const isHardDisabled = side === SIDES.FRONT;
+  const isEasyDisabled = side === SIDES.FRONT;
 
   const onFlipClick = () => {
-    if (side === "front") {
-      setSide("back");
+    if (side === SIDES.FRONT) {
+      setSide(SIDES.BACK);
     } else {
-      setSide("front");
+      setSide(SIDES.FRONT);
     }
+  };
+
+  const onDifficultyButtonClick = (difficulty) => () => {
+    props.onDifficultyButtonClick(difficulty, props.card);
   };
 
   return (
@@ -17,9 +30,10 @@ export const Card = props => {
       <div className="card-header">
         <Progress />
       </div>
+
       <div className="card-body">
         <h5 className="card-title">{props.card.front}</h5>
-        {side === "back" && (
+        {side === SIDES.BACK && (
           <p className="card-text">
             <em>{props.card.back}</em>
           </p>
@@ -30,22 +44,20 @@ export const Card = props => {
 
         <br />
 
-        <div
-          className="btn-group btn-block"
-          role="group"
-          aria-label="Basic example"
-        >
+        <div className="btn-group btn-block" role="group">
           <button
             type="button"
             className="btn btn-danger"
-            disabled={side === "front"}
+            disabled={isHardDisabled}
+            onClick={onDifficultyButtonClick('hard')}
           >
             hard
           </button>
           <button
             type="button"
             className="btn btn-success"
-            disabled={side === "front"}
+            disabled={isEasyDisabled}
+            onClick={onDifficultyButtonClick('easy')}
           >
             easy
           </button>

@@ -6,7 +6,7 @@ const DECKS = DeckAPI.getAllDecks();
 export const Decks = (props) => {
   const onDeckClick = (deck) => () => {
     props.onDeckClick(deck);
-  }; 
+  };
 
   return (
     <ul className="nav nav-pills">
