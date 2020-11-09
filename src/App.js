@@ -15,7 +15,7 @@ const shuffle = (arr) => {
 
 const DEFAULT_DECK = DeckAPI.getAllDecks()[0];
 
-export const App = () => {
+export const App = () => {6
   const [deck, setDeck] = useState(DEFAULT_DECK);
   const [ndx, setNdx] = useState(0);
   const [easyCards, setEasyCards] = useState([]);
