@@ -6,18 +6,12 @@ import * as DeckAPI from "./data/DeckAPI";
 
 const DEFAULT_DECK = DeckAPI.getAllDecks()[0];
 
-const SIDES = {
-  FRONT: "FRONT",
-  BACK: "BACK"
-};
-
 export const App = () => {
   const [deck, setDeck] = useState(DEFAULT_DECK);
   const [ndx, setNdx] = useState(0);
   const [easyCards, setEasyCards] = useState([]);
   const [hardCards, setHardCards] = useState([]);
   const [resultsVisible, setResultsVisible] = useState(false);
-  const [side, setSide] = useState(SIDES.FRONT);
 
   // TODO: Randomize the cards when a new deck is clicked.
   const onDeckClick = nextDeck => {
@@ -67,8 +61,6 @@ export const App = () => {
       <h4>Selected deck: {deck.name}</h4>
       <Progress />
       <Card
-        side={side}
-        setSide={setSide}
         card={deck.cards[ndx]}
         onDifficultyButtonClick={onDifficultyButtonClick}
       />

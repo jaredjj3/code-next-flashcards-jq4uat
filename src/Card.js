@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Progress } from "./Progress";
 
 const SIDES = {
@@ -7,8 +7,7 @@ const SIDES = {
 };
 
 export const Card = props => {
-  const side = props.side;
-  const setSide = props.setSide;
+  const [side, setSide] = useState(SIDES.FRONT);
 
   const isHardDisabled = side === SIDES.FRONT;
   const isEasyDisabled = side === SIDES.FRONT;
@@ -20,6 +19,10 @@ export const Card = props => {
       setSide(SIDES.FRONT);
     }
   };
+
+  useEffect(() => {
+    setSide(SIDES.FRONT);
+  }, [props.card])
 
   const onDifficultyButtonClick = (difficulty) => () => {
     props.onDifficultyButtonClick(difficulty, props.card);
